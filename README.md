@@ -1,3 +1,3 @@
 # Learning_JavaScript
 
-I Created this repo to follow my Vanilla JavaScript Progress
+I created this repo to follow my vanilla JavaScript progress
