@@ -1,0 +1,12 @@
+.open {
+    height: 30px;
+    padding: 8px 16px;
+    border: 1px;
+    transition: 0.5s;
+}
+.closed {
+    height: 0;
+    padding: 0;
+    border: 0;
+    transition: 0.2s;
+}
