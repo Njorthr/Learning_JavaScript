@@ -1,4 +1,4 @@
-# Learning_JavaScript
+# Learning JavaScript
 
 I created this repo to follow my vanilla JavaScript progress  
 
