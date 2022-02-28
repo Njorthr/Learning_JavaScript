@@ -4,6 +4,15 @@ let squares = []
 let bombAmount = 20
 let flags = 0
 let isGameOver = false;
+const startBtn = document.querySelector("#start-btn"),
+    restartBtn = document.querySelector("#restart");
+
+
+startBtn.addEventListener("click", () => {
+    startBtn.style.display = "none";
+    createBoard()
+})
+
 
 // Create Board
 
@@ -23,6 +32,8 @@ function createBoard() {
         square.classList.add(shuffledArray[i])
         grid.appendChild(square)
         squares.push(square)
+        const innerSquare = document.createElement("div")
+        innerSquare.setAttribute("class", innerSquare)
 
         // normal click
         square.addEventListener("click", function (e) {
@@ -85,7 +96,8 @@ function createBoard() {
 }
 
 
-createBoard()
+
+
 
 // add flag with right click
 function addFlag(square) {
@@ -193,9 +205,8 @@ function checkSquare(square, currentId) {
 }
 
 function gameOver(square) {
-    console.log("Boom");
     isGameOver = true;
-
+    checkForWin()
     // Show all the bombs
     squares.forEach(square => {
         if (square.classList.contains("bomb")) {
@@ -216,5 +227,8 @@ function checkForWin() {
             console.log("win");
             isGameOver = true;
         }
+    }
+    if (isGameOver) {
+        console.log(matches);
     }
 }
