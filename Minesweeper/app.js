@@ -4,8 +4,11 @@ let squares = []
 let bombAmount = 20
 let flags = 0
 let isGameOver = false;
+let matches = 0;
 const startBtn = document.querySelector("#start-btn"),
     restartBtn = document.querySelector("#restart");
+let result = document.querySelector(".result");
+
 
 
 startBtn.addEventListener("click", () => {
@@ -13,10 +16,27 @@ startBtn.addEventListener("click", () => {
     createBoard()
 })
 
+restartBtn.addEventListener("click", () => {
+    flags = 0;
+    squares = []
+    matches = 0;
+    console.log(matches);
+    isGameOver = false;
+    restartBtn.style.display = "none";
+    grid.innerHTML = null;
+    result.innerHTML = "";
+    checkForWin()
+    createBoard()
+})
+
+
+
+
 
 // Create Board
 
 function createBoard() {
+
     // get shuffled game array withc random bombs
     const bombsArray = Array(bombAmount).fill("bomb")        // making an array of 20 indexes and using fill to fill each with "bomb"
     const emptyArray = Array(width * width - bombAmount).fill("valid")
@@ -29,6 +49,7 @@ function createBoard() {
     for (let i = 0; i < width * width; i++) {
         const square = document.createElement("div")
         square.setAttribute("id", i)
+        square.setAttribute("class", "playBox")
         square.classList.add(shuffledArray[i])
         grid.appendChild(square)
         squares.push(square)
@@ -104,17 +125,20 @@ function addFlag(square) {
     if (isGameOver) {
         return
     }
-    if (!square.classList.contains("checked") && (flags < bombAmount)) {
-        if (!square.classList.contains("flag")) {
+    if (!square.classList.contains("checked") && (flags <= bombAmount)) {
+
+        if (!square.classList.contains("flag") && flags < bombAmount) {
             square.classList.add("flag")
             square.innerHTML = "🚩"
             flags++
             checkForWin()
-        } else {
+        } else if (square.classList.contains("flag")) {
             square.classList.remove("flag")
             square.innerHTML = ""
             flags--
         }
+
+
     }
 }
 
@@ -124,6 +148,7 @@ function addFlag(square) {
 function click(square) {
     let currentId = square.id
     if (isGameOver) {
+
         return
     }
     if (square.classList.contains("checked") || square.classList.contains("flag")) {
@@ -213,22 +238,29 @@ function gameOver(square) {
             square.innerHTML = "💣"
         }
     })
+
 }
 
 // check for win
 function checkForWin() {
-    let matches = 0;
+    matches = 0;
 
     for (let i = 0; i < squares.length; i++) {
         if (squares[i].classList.contains("flag") && squares[i].classList.contains("bomb")) {
             matches++
+            console.log(matches);
         }
         if (matches === bombAmount) {
-            console.log("win");
             isGameOver = true;
         }
     }
     if (isGameOver) {
+        if (matches === bombAmount) {
+            result.innerHTML += `Congrats! You Win! <br>`
+        }
+        restartBtn.style.display = "block";
+        result.innerHTML += `Your score is : ${matches}`
         console.log(matches);
     }
 }
+
