@@ -45,6 +45,7 @@ function touchStart(index) {
 function touchEnd() {
     isDragging = false
     cancelAnimationFrame(animationID)
+
     const movedBy = currentTranslate - prevTranslate
 
     if (movedBy < -100 && currentIndex < slides.length - 1) {
